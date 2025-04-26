@@ -26,6 +26,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(qtwFile_Organizer
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        Backend/files_care.h Backend/files_care.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET qtwFile_Organizer APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

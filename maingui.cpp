@@ -1,8 +1,14 @@
 #include "maingui.h"
 #include "./ui_maingui.h"
 
+#include <QDebug>
 #include <QString>
 #include <QStringList>
+#include <filesystem>
+#include <QList>
+#include <deque>
+
+using namespace std;
 
 mainGui::mainGui(QWidget *parent)
     : QMainWindow(parent)
@@ -18,9 +24,28 @@ mainGui::~mainGui()
 
 void mainGui::on_btnLoadFiles_clicked()
 {
-    QStringList foundFiles = {};
-    // numofFiles = foundFiles.size();
+    //filesystem libary use string only, we create std::deque list which we need to convert to QString later
+    deque<string> listedFiles = {};
 
-    ui->listFiles->addItems(foundFiles);
+    QString qtPath = ui->lineEdit->text();
+
+    filesystem::path sPath = qtPath.toStdString();
+
+
+    //Creates a list in deque
+    for (const auto& entry:filesystem::directory_iterator(sPath)) {
+        listedFiles.push_back(entry.path().string());
+    }
+
+
+    //Converts deque to QList
+    QList<QString> qtListedFiles;
+    for (const auto& file : listedFiles) {
+        qtListedFiles.append(QString::fromStdString(file));
+    }
+
+    //Shows the ist of files in ui
+    ui->listFiles->clear();
+    ui->listFiles->addItems(qtListedFiles);
 
 }
