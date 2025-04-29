@@ -9,6 +9,7 @@
 #include <deque>
 
 using namespace std;
+namespace fs = std::filesystem;
 
 mainGui::mainGui(QWidget *parent)
     : QMainWindow(parent)
@@ -30,6 +31,10 @@ void mainGui::on_btnLoadFiles_clicked()
     QString qtPath = ui->lineEdit->text();
 
     filesystem::path sPath = qtPath.toStdString();
+
+    if (!fs::exists(sPath)) {
+        return;
+    }
 
 
     //Creates a list in deque
