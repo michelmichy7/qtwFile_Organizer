@@ -20,6 +20,8 @@ public:
 private slots:
     void on_btnLoadFiles_clicked();
 
+    void on_btnOrganize_clicked();
+
 private:
     Ui::mainGui *ui;
 };

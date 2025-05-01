@@ -6,7 +6,7 @@
 #include <QStringList>
 #include <filesystem>
 #include <QList>
-#include <deque>
+#include <QMultiMap>
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -23,10 +23,13 @@ mainGui::~mainGui()
     delete ui;
 }
 
+    QMultiMap<QString, QString> qtListedFiles;
+    QMultiMap<QString, QString> qtOrganizedFiles;
+
 void mainGui::on_btnLoadFiles_clicked()
 {
     //filesystem libary use string only, we create std::deque list which we need to convert to QString later
-    deque<string> listedFiles = {};
+
 
     QString qtPath = ui->lineEdit->text();
 
@@ -39,18 +42,27 @@ void mainGui::on_btnLoadFiles_clicked()
 
     //Creates a list in deque
     for (const auto& entry:filesystem::directory_iterator(sPath)) {
-        listedFiles.push_back(entry.path().string());
+        QString filePath = QString::fromStdString(entry.path().string());
+        qtListedFiles.insert(//expansion, //path);
     }
 
 
     //Converts deque to QList
-    QList<QString> qtListedFiles;
-    for (const auto& file : listedFiles) {
+
+   /* for (const auto& file : qtListedFiles) {
         qtListedFiles.append(QString::fromStdString(file));
     }
 
     //Shows the ist of files in ui
     ui->listFiles->clear();
-    ui->listFiles->addItems(qtListedFiles);
-
+    ui->listFiles->addItems(qtOrganizedFiles);
+*/
 }
+
+void mainGui::on_btnOrganize_clicked()
+{
+    for (const auto& file : qtListedFiles) {
+        return;
+    }
+}
+
