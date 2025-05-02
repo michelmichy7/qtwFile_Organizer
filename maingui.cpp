@@ -11,7 +11,7 @@
 using namespace std;
 namespace fs = std::filesystem;
 
-QStringList qtListedFiles;
+QList<QString> qtListedFiles;
 QStringList qtOrganizedFiles;
 
 
@@ -68,30 +68,32 @@ void mainGui::on_btnOrganize_clicked()
     QString qtTarget = ui->lineTarget->text();
     fs::path sTarget = qtTarget.toStdString();
 
-    for (const auto& file : qtListedFiles) {
+    for (const QString& file : qtListedFiles) {
         fs::path filePath = file.toStdString();
         fs::path pathFrom = file.toStdString();
         QString fExt = QString::fromStdString(filePath.extension().string());
 
-
+        if (fs::is_regular_file(filePath)) {
         if (fExt == ".pdf" || fExt == ".docx" || fExt == ".doc" || fExt == ".txt"){
 
             fs::create_directory(sTarget/"Documents");
-            fs::copy(pathFrom, sTarget/"Documents");
+
+            fs::copy(pathFrom, sTarget/"Documents" / pathFrom.filename());
         }
         else if (fExt == ".jpg" || fExt == ".jpeg" || fExt == ".webp" || fExt == ".png" || fExt == ".heif") {
 
 
             fs::create_directory(sTarget/"Photos");
-            fs::copy(pathFrom, sTarget/"Photos");
+            fs::copy(pathFrom, sTarget/"Photos" / pathFrom.filename());
         }
         else if (fExt == ".mov" || fExt == ".mp4" || fExt == ".mp2" || fExt == ".avi" || fExt == ".webm" || fExt == ".mkv") {
             fs::create_directory(sTarget/"Movies and Videos");
-            fs::copy(pathFrom, sTarget/"Movies and Videos");
+            fs::copy(pathFrom, sTarget/"Movies and Videos" / pathFrom.filename());
         }
         else {
             fs::create_directory(sTarget/"Other");
-            fs::copy(pathFrom, sTarget/"Other");
+            fs::copy(pathFrom, sTarget/"Other" / pathFrom.filename());
+        }
         }
     }
 }
