@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>409</width>
-    <height>409</height>
+    <height>413</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,8 +27,8 @@
    <widget class="QPushButton" name="btnLoadFiles">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>280</y>
+      <x>150</x>
+      <y>260</y>
       <width>80</width>
       <height>24</height>
      </rect>
@@ -37,7 +37,7 @@
      <string>Load Files</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="linePath">
     <property name="geometry">
      <rect>
       <x>23</x>
@@ -46,37 +46,34 @@
       <height>23</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>188</x>
-      <y>210</y>
-      <width>31</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <strikeout>false</strikeout>
-      <kerning>true</kerning>
-     </font>
-    </property>
-    <property name="text">
-     <string>Path</string>
+    <property name="placeholderText">
+     <string>Files path</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnOrganize">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>310</y>
+      <x>150</x>
+      <y>340</y>
       <width>80</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
      <string>Organize</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineTarget">
+    <property name="geometry">
+     <rect>
+      <x>23</x>
+      <y>300</y>
+      <width>361</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Target Directory</string>
     </property>
    </widget>
   </widget>
@@ -86,7 +83,7 @@
      <x>0</x>
      <y>0</y>
      <width>409</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

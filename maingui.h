@@ -17,9 +17,10 @@ public:
     mainGui(QWidget *parent = nullptr);
     ~mainGui();
 
+
 private slots:
     void on_btnLoadFiles_clicked();
-
+    void listFiles();
     void on_btnOrganize_clicked();
 
 private:

@@ -11,58 +11,88 @@
 using namespace std;
 namespace fs = std::filesystem;
 
+QStringList qtListedFiles;
+QStringList qtOrganizedFiles;
+
+
+
 mainGui::mainGui(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::mainGui)
 {
     ui->setupUi(this);
-}
+    }
 
 mainGui::~mainGui()
 {
     delete ui;
 }
 
-    QMultiMap<QString, QString> qtListedFiles;
-    QMultiMap<QString, QString> qtOrganizedFiles;
+
+
+void mainGui::listFiles() {
+
+    QString qtPath = ui->linePath->text();
+    fs::path sPath = qtPath.toStdString();
+
+    if (!fs::exists(sPath)) {
+        return;
+    }
+    //Creates a list in QMM
+    for (const auto& entry:filesystem::directory_iterator(sPath)) {
+        QString path = QString::fromStdString(entry.path().string());
+        qtListedFiles.append(path);
+    }
+
+}
+
 
 void mainGui::on_btnLoadFiles_clicked()
 {
     //filesystem libary use string only, we create std::deque list which we need to convert to QString later
 
-
-    QString qtPath = ui->lineEdit->text();
-
-    filesystem::path sPath = qtPath.toStdString();
-
-    if (!fs::exists(sPath)) {
-        return;
-    }
-
-
-    //Creates a list in deque
-    for (const auto& entry:filesystem::directory_iterator(sPath)) {
-        QString filePath = QString::fromStdString(entry.path().string());
-        qtListedFiles.insert(//expansion, //path);
-    }
-
-
-    //Converts deque to QList
-
-   /* for (const auto& file : qtListedFiles) {
-        qtListedFiles.append(QString::fromStdString(file));
-    }
-
-    //Shows the ist of files in ui
     ui->listFiles->clear();
-    ui->listFiles->addItems(qtOrganizedFiles);
-*/
+    qtListedFiles.clear();
+
+
+
+    listFiles();
+
+
+    ui->listFiles->addItems(qtListedFiles);
 }
 
 void mainGui::on_btnOrganize_clicked()
 {
+
+    QString qtTarget = ui->lineTarget->text();
+    fs::path sTarget = qtTarget.toStdString();
+
     for (const auto& file : qtListedFiles) {
-        return;
+        fs::path filePath = file.toStdString();
+        fs::path pathFrom = file.toStdString();
+        QString fExt = QString::fromStdString(filePath.extension().string());
+
+
+        if (fExt == ".pdf" || fExt == ".docx" || fExt == ".doc" || fExt == ".txt"){
+
+            fs::create_directory(sTarget/"Documents");
+            fs::copy(pathFrom, sTarget/"Documents");
+        }
+        else if (fExt == ".jpg" || fExt == ".jpeg" || fExt == ".webp" || fExt == ".png" || fExt == ".heif") {
+
+
+            fs::create_directory(sTarget/"Photos");
+            fs::copy(pathFrom, sTarget/"Photos");
+        }
+        else if (fExt == ".mov" || fExt == ".mp4" || fExt == ".mp2" || fExt == ".avi" || fExt == ".webm" || fExt == ".mkv") {
+            fs::create_directory(sTarget/"Movies and Videos");
+            fs::copy(pathFrom, sTarget/"Movies and Videos");
+        }
+        else {
+            fs::create_directory(sTarget/"Other");
+            fs::copy(pathFrom, sTarget/"Other");
+        }
     }
 }
 
