@@ -23,6 +23,10 @@ private slots:
     void listFiles();
     void on_btnOrganize_clicked();
 
+    void on_btnPathDir_clicked();
+
+    void on_btnTargetDir_clicked();
+
 private:
     Ui::mainGui *ui;
 };

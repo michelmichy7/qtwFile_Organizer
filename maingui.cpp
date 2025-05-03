@@ -6,7 +6,8 @@
 #include <QStringList>
 #include <filesystem>
 #include <QList>
-#include <QMultiMap>
+#include <QFileDialog>
+
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -74,7 +75,7 @@ void mainGui::on_btnOrganize_clicked()
         QString fExt = QString::fromStdString(filePath.extension().string());
 
         if (fs::is_regular_file(filePath)) {
-        if (fExt == ".pdf" || fExt == ".docx" || fExt == ".doc" || fExt == ".txt"){
+        if (fExt == ".pdf" || fExt == ".docx" || fExt == ".doc" || fExt == ".txt" || fExt == ".pptx"){
 
             fs::create_directory(sTarget/"Documents");
 
@@ -95,6 +96,26 @@ void mainGui::on_btnOrganize_clicked()
             fs::copy(pathFrom, sTarget/"Other" / pathFrom.filename());
         }
         }
+    }
+}
+
+
+void mainGui::on_btnPathDir_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, "Select Directory");
+
+    if (!dir.isEmpty()) {
+        ui->linePath->setText(dir);
+    }
+}
+
+
+void mainGui::on_btnTargetDir_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, "Select Directory");
+
+    if (!dir.isEmpty()) {
+        ui->lineTarget->setText(dir);
     }
 }
 
